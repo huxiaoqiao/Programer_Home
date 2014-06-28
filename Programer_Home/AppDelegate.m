@@ -11,6 +11,7 @@
 #import "PPRevealSideViewController.h"
 #import "SVGloble.h"
 
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -21,7 +22,7 @@
     [self.window makeKeyAndVisible];
     CGRect screenRect = [[UIScreen mainScreen] bounds];
     [SVGloble shareInstance].globleWidth = screenRect.size.width;//屏幕宽度
-    [SVGloble shareInstance].globleHeight = screenRect.size.height - 20 - 64;//屏幕高度;
+    [SVGloble shareInstance].globleHeight = screenRect.size.height - 20 - 46 - 30;//屏幕高度;
     [SVGloble shareInstance].globleAllHeight = screenRect.size.height;
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(reachabilityChanged:)
@@ -31,6 +32,7 @@
     hostReach = [Reachability reachabilityWithHostName:@"www.baidu.com"];
     [hostReach startNotifier];
     [self performSelector:@selector(createViewController) withObject:nil afterDelay:0.1];
+    [self getTheCode];
     return YES;
 }
 - (void)createViewController
@@ -72,31 +74,27 @@
     
 }
 
-- (void)applicationWillResignActive:(UIApplication *)application
+- (void)getTheCode
 {
-    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-    // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+    request1 = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:authorizeUrl]];
+    request1.delegate = self;
+    [request1 startAsynchronous];
 }
-
-- (void)applicationDidEnterBackground:(UIApplication *)application
+- (void)getTheAccess_tokenWithCode:(NSString *)code
 {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    request2 = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@&code=%@",tokenUrl,code]]];
+    request2.delegate = self;
+    [request2 startAsynchronous];
+    
 }
-
-- (void)applicationWillEnterForeground:(UIApplication *)application
+#pragma mark - ASIHTTPRequestDelegate
+- (void)requestFinished:(ASIHTTPRequest *)request
 {
-    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    NSLog(@"%@",[request responseString]);
 }
-
-- (void)applicationDidBecomeActive:(UIApplication *)application
+- (void)requestFailed:(ASIHTTPRequest *)request
 {
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-}
-
-- (void)applicationWillTerminate:(UIApplication *)application
-{
-    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    NSLog(@"获取失败");
 }
 
 @end

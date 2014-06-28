@@ -10,6 +10,9 @@
 
 #import "SVGloble.h"
 #import "SVTopScrollView.h"
+#import "NewsView.h"
+#import "BlogView.h"
+#import "RecommendView.h"
 
 #define POSITIONID (int)(scrollView.contentOffset.x/320)
 
@@ -31,7 +34,6 @@
     self = [super initWithFrame:frame];
     if (self) {
         self.delegate = self;
-        self.backgroundColor = [UIColor lightGrayColor];
         self.pagingEnabled = YES;
         self.userInteractionEnabled = YES;
         self.bounces = NO;
@@ -46,17 +48,27 @@
 
 - (void)initWithViews
 {
-    for (int i = 0; i < [viewNameArray count]; i++) {
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0+320*i, 0, 320, [SVGloble shareInstance].globleHeight-44)];
-        label.textAlignment = NSTextAlignmentCenter;
-        label.font = [UIFont boldSystemFontOfSize:50.0];
-        label.tag = 200 + i;
-        if (i == 0) {
-            label.text = [viewNameArray objectAtIndex:i];
-        }
-        [self addSubview:label];
-    }
-    self.contentSize = CGSizeMake(320*[viewNameArray count], [SVGloble shareInstance].globleHeight-44);
+    
+    NSArray *arr1 = [[NSBundle mainBundle] loadNibNamed:@"NewsView" owner:self options:nil];
+    NewsView *news = arr1[0];
+    [news loadTableView];
+    news.tag = 200;
+    NSArray *arr2 = [[NSBundle mainBundle] loadNibNamed:@"BlogView" owner:self options:nil];
+    BlogView *blog = arr2[0];
+    blog.tag = 201;
+    NSArray *arr3 = [[NSBundle mainBundle] loadNibNamed:@"RecommendView" owner:self options:nil];
+    RecommendView *recommend = arr3[0];
+    recommend.tag = 202;
+    
+    news.center = CGPointMake(160, [SVGloble shareInstance].globleHeight / 2);
+    blog.center = CGPointMake(160 + 320, [SVGloble shareInstance].globleHeight / 2);
+    recommend.center = CGPointMake(160 + 320 * 2, [SVGloble shareInstance].globleHeight / 2);
+    
+    [self addSubview:news];
+    [self addSubview:blog];
+    [self addSubview:recommend];
+    
+    self.contentSize = CGSizeMake(320*3, [SVGloble shareInstance].globleHeight);
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
@@ -90,9 +102,31 @@
 -(void)loadData
 {
     CGFloat pagewidth = self.frame.size.width;
-    int page = floor((self.contentOffset.x - pagewidth/viewNameArray.count)/pagewidth)+1;
-    UILabel *label = (UILabel *)[self viewWithTag:page+200];
-    label.text = [NSString stringWithFormat:@"%@",[viewNameArray objectAtIndex:page]];
+    int page = floor((self.contentOffset.x - pagewidth/3)/pagewidth)+1;
+    NSLog(@"%d",page);
+    switch (page) {
+        case 0:
+        {
+            NewsView *news = (NewsView *)[self viewWithTag:200 + page];
+            //加载数据
+            [news autoRefresh];
+        }
+        break;
+        case 1:
+        {
+            BlogView *blog = (BlogView *)[self viewWithTag:200 + page];
+            //加载数据
+        }
+            break;
+            case 2:
+        {
+            RecommendView *recommend = (RecommendView *)[self viewWithTag:200 + page];
+            //加载数据
+        }
+            break;
+        default:
+            break;
+    }
 }
 
 //滚动后修改顶部滚动条

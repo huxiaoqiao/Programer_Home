@@ -9,7 +9,6 @@
 #import "LeftViewController.h"
 #import "CellModel.h"
 #import "LeftMenuCell.h"
-#import "NewsViewController.h"
 #import "FAQViewController.h"
 #import "TweetViewController.h"
 #import "SoftWareViewController.h"
