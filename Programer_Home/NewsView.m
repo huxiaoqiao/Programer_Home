@@ -12,11 +12,9 @@
 #import "NewsCell.h"
 #import "GDataXMLNode.h"
 
-@interface NewsView()<ASIHTTPRequestDelegate>
+@interface NewsView()
 {
     NSMutableArray *_dataArr;
-    ASIHTTPRequest *_request1;
-    ASIHTTPRequest *_request2;
     int pageIndex;
     BOOL isHeaderRefresh;
     BOOL isFooterRefresh;
@@ -36,7 +34,7 @@
 
 - (void)loadTableView
 {
-    pageIndex = 1;
+    pageIndex = 0;
     _dataArr = [NSMutableArray array];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -58,34 +56,18 @@
 //下拉刷新
 - (void)headerRefreshing
 {
-    //网络加载数据
-    _request1 = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@?catalog=%d&pageIndex=%d&pageSize=%d", api_news_list, 1,1, 20]]];
-    _request1.delegate = self;
-    [_request1 startAsynchronous];
-    isHeaderRefresh = YES;
-    pageIndex = 0;
-}
-//上拉刷新
-- (void)footerRefreshing
-{
-    isHeaderRefresh = NO;
-    pageIndex ++;
-    _request2 = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@?catalog=%d&pageIndex=%d&pageSize=%d", api_news_list, 1,pageIndex, 20]]];
-    _request2.delegate = self;
-    [_request2 startAsynchronous];
-}
-#pragma mark - ASIHTTPRequestDelegate
-- (void)requestFinished:(ASIHTTPRequest *)request
-{
-    if(isHeaderRefresh)
-    {
-        if(_dataArr.count)
+    //网络上加载数据
+    NSString *url = [NSString stringWithFormat:@"%@?catalog=%d&pageIndex=%d&pageSize=%d", api_news_list, 1,1, 20];
+    [[AFOSCClient sharedClient] getPath:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                if(isHeaderRefresh)
         {
-            [_dataArr removeAllObjects];
+            if(_dataArr.count)
+            {
+                [_dataArr removeAllObjects];
+            }
         }
-    }
         //XML数据解析
-        GDataXMLDocument *document = [[GDataXMLDocument alloc] initWithData:[request responseData] options:0 error:nil];
+        GDataXMLDocument *document = [[GDataXMLDocument alloc] initWithData:operation.responseData options:0 error:nil];
         NSString *xpath = @"/oschina/newslist/news";
         NSArray *arr = [document nodesForXPath:xpath error:nil];
         
@@ -102,22 +84,50 @@
             //model.authoruid2 = [[[element elementsForName:@"newstype"][1] stringValue] intValue];
             [_dataArr addObject:model];
         }
-        [self.tableView reloadData];
-    if(request == _request1)
-    {
+                [self.tableView reloadData];
         [self.tableView headerEndRefreshing];
-    }else
-    {
-        [self.tableView footerEndRefreshing];
-    }
-   
-    
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"加载新闻失败");
+    }];
+    isHeaderRefresh = YES;
+    pageIndex = 0;
 }
-- (void)requestFailed:(ASIHTTPRequest *)request
+//上拉刷新
+- (void)footerRefreshing
 {
-    NSLog(@"下载失败");
-}
+    isHeaderRefresh = NO;
+    pageIndex ++;
+    NSLog(@"%d",pageIndex);
+    NSString *url = [NSString stringWithFormat:@"%@?catalog=%d&pageIndex=%d&pageSize=%d", api_news_list, 1,pageIndex, 20];
+    [[AFOSCClient sharedClient] getPath:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        //XML数据解析
+        //NSLog(@"%@",operation.responseString);
+        GDataXMLDocument *document = [[GDataXMLDocument alloc] initWithData:operation.responseData options:0 error:nil];
+        NSString *xpath = @"/oschina/newslist/news";
+        NSArray *arr = [document nodesForXPath:xpath error:nil];
+        
+        for(GDataXMLElement *element in arr)
+        {
+            NewsModel *model = [[NewsModel alloc] init];
+            model._id = [[[element elementsForName:@"id"][0] stringValue] intValue];
+            model.title = [[element elementsForName:@"title"][0] stringValue];
+            model.author = [[element elementsForName:@"author"][0] stringValue];
+            model.authorId = [[[element elementsForName:@"authorid"][0] stringValue] intValue];
+            model.commentCount = [[[element elementsForName:@"commentCount"][0]stringValue] intValue];
+            model.pubDate = [[element elementsForName:@"pubDate"][0] stringValue];
+            model.newsType = [[[element elementsForName:@"newstype"][0] stringValue] intValue];
+            //model.authoruid2 = [[[element elementsForName:@"newstype"][1] stringValue] intValue];
+            [_dataArr addObject:model];
+            //NSLog(@"%@",model.title);
+        }
+        NSLog(@"_dataArr.count is %d",_dataArr.count);
+        [self.tableView reloadData];
+        [self.tableView footerEndRefreshing];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"加载新闻失败");
+    }];
 
+}
 
 #pragma mark - UITableViewDataSource,UITableViewDelegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -133,11 +143,13 @@
         {
             NSArray *arr = [[NSBundle mainBundle] loadNibNamed:@"NewsCell" owner:self options:nil];
             cell = arr[0];
-            NewsModel *model = _dataArr[indexPath.row];
-            cell.titleLabel.text = model.title;
-            cell.titleLabel.font = [UIFont boldSystemFontOfSize:16];
-            cell.pubDateLabel.text = [NSString stringWithFormat:@"%@ 发布于 %@ (%d评)",model.author,model.pubDate,model.commentCount];
         }
+        NewsModel *model = _dataArr[indexPath.row];
+        cell.titleLabel.text = model.title;
+        NSLog(@"%@",model.title);
+        cell.titleLabel.font = [UIFont boldSystemFontOfSize:16];
+        cell.pubDateLabel.text = [NSString stringWithFormat:@"%@ 发布于 %@ (%d评)",model.author,model.pubDate,model.commentCount];
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     return cell;
 }
