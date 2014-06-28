@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface BlogView : UIView
-
+- (void)AFNetworkTest;
 @end

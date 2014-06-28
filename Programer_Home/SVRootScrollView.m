@@ -116,6 +116,7 @@
         {
             BlogView *blog = (BlogView *)[self viewWithTag:200 + page];
             //加载数据
+            [blog AFNetworkTest];
         }
             break;
             case 2:

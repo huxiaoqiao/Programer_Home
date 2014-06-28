@@ -14,18 +14,19 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code
-    }
+            }
     return self;
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
+- (void)AFNetworkTest
 {
-    // Drawing code
+    NSString *url = [NSString stringWithFormat:@"%@?type=latest&pageIndex=%d&pageSize=%d", api_blog_list, 2, 20];
+    
+    [[AFOSCClient sharedClient] getPath:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"%@",operation.responseString);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"博客列表读取出错！");
+    }];
 }
-*/
 
 @end
