@@ -3,7 +3,7 @@
 //  Programer_Home
 //
 //  Created by 胡晓桥 on 14-6-27.
-//  Copyright (c) 2014年 胡晓桥. All rights reserved.
+//  Copyright (c) 2014年 Apple.Inc All rights reserved.
 //
 
 #import "NewsView.h"
@@ -16,8 +16,6 @@
 {
     NSMutableArray *_dataArr;
     int pageIndex;
-    BOOL isHeaderRefresh;
-    BOOL isFooterRefresh;
 }
 @end
 
@@ -40,7 +38,6 @@
     self.tableView.dataSource = self;
     [self setupRefresh];
     [self autoRefresh];
-    isHeaderRefresh = NO;
 
 }
 
@@ -59,13 +56,10 @@
     //网络上加载数据
     NSString *url = [NSString stringWithFormat:@"%@?catalog=%d&pageIndex=%d&pageSize=%d", api_news_list, 1,1, 20];
     [[AFOSCClient sharedClient] getPath:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                if(isHeaderRefresh)
-        {
-            if(_dataArr.count)
+                          if(_dataArr.count)
             {
                 [_dataArr removeAllObjects];
             }
-        }
         //XML数据解析
         GDataXMLDocument *document = [[GDataXMLDocument alloc] initWithData:operation.responseData options:0 error:nil];
         NSString *xpath = @"/oschina/newslist/news";
@@ -89,19 +83,16 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"加载新闻失败");
     }];
-    isHeaderRefresh = YES;
     pageIndex = 0;
 }
 //上拉刷新
 - (void)footerRefreshing
 {
-    isHeaderRefresh = NO;
     pageIndex ++;
     NSLog(@"%d",pageIndex);
     NSString *url = [NSString stringWithFormat:@"%@?catalog=%d&pageIndex=%d&pageSize=%d", api_news_list, 1,pageIndex, 20];
     [[AFOSCClient sharedClient] getPath:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         //XML数据解析
-        //NSLog(@"%@",operation.responseString);
         GDataXMLDocument *document = [[GDataXMLDocument alloc] initWithData:operation.responseData options:0 error:nil];
         NSString *xpath = @"/oschina/newslist/news";
         NSArray *arr = [document nodesForXPath:xpath error:nil];
@@ -118,7 +109,6 @@
             model.newsType = [[[element elementsForName:@"newstype"][0] stringValue] intValue];
             //model.authoruid2 = [[[element elementsForName:@"newstype"][1] stringValue] intValue];
             [_dataArr addObject:model];
-            //NSLog(@"%@",model.title);
         }
         NSLog(@"_dataArr.count is %d",_dataArr.count);
         [self.tableView reloadData];

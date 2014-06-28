@@ -48,14 +48,17 @@
 
 - (void)initWithViews
 {
-    
+    //新闻页
     NSArray *arr1 = [[NSBundle mainBundle] loadNibNamed:@"NewsView" owner:self options:nil];
     NewsView *news = arr1[0];
     [news loadTableView];
     news.tag = 200;
+    //博客页
     NSArray *arr2 = [[NSBundle mainBundle] loadNibNamed:@"BlogView" owner:self options:nil];
     BlogView *blog = arr2[0];
     blog.tag = 201;
+    [blog loadTableView];
+    //推荐阅读页
     NSArray *arr3 = [[NSBundle mainBundle] loadNibNamed:@"RecommendView" owner:self options:nil];
     RecommendView *recommend = arr3[0];
     recommend.tag = 202;
@@ -116,7 +119,7 @@
         {
             BlogView *blog = (BlogView *)[self viewWithTag:200 + page];
             //加载数据
-            [blog AFNetworkTest];
+            [blog autoRefresh];
         }
             break;
             case 2:

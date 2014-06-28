@@ -30,6 +30,7 @@
 		186ED4B9195EBFEF006C2B03 /* AFXMLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 186ED4AC195EBFEF006C2B03 /* AFXMLRequestOperation.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		186ED4BA195EBFEF006C2B03 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 186ED4AE195EBFEF006C2B03 /* UIImageView+AFNetworking.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		186ED4BB195EBFEF006C2B03 /* AFOSCClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 186ED4B0195EBFEF006C2B03 /* AFOSCClient.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		186ED4C2195EE958006C2B03 /* BlogModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 186ED4C1195EE958006C2B03 /* BlogModel.m */; };
 		18A458D8195BADF5004D4D00 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18A458D7195BADF5004D4D00 /* Foundation.framework */; };
 		18A458DA195BADF5004D4D00 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18A458D9195BADF5004D4D00 /* CoreGraphics.framework */; };
 		18A458DC195BADF5004D4D00 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18A458DB195BADF5004D4D00 /* UIKit.framework */; };
@@ -255,6 +256,8 @@
 		186ED4AE195EBFEF006C2B03 /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
 		186ED4AF195EBFEF006C2B03 /* AFOSCClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFOSCClient.h; sourceTree = "<group>"; };
 		186ED4B0195EBFEF006C2B03 /* AFOSCClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFOSCClient.m; sourceTree = "<group>"; };
+		186ED4C0195EE958006C2B03 /* BlogModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlogModel.h; sourceTree = "<group>"; };
+		186ED4C1195EE958006C2B03 /* BlogModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlogModel.m; sourceTree = "<group>"; };
 		18A458D4195BADF5004D4D00 /* Programer_Home.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Programer_Home.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		18A458D7195BADF5004D4D00 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		18A458D9195BADF5004D4D00 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -600,13 +603,13 @@
 				18A458E6195BADF5004D4D00 /* AppDelegate.h */,
 				18A458E7195BADF5004D4D00 /* AppDelegate.m */,
 				18A45939195BB106004D4D00 /* RootViewCtl */,
+				18A45A7B195CF745004D4D00 /* Model */,
 				18A45940195BB168004D4D00 /* LeftViewCtl */,
 				18A4593A195BB120004D4D00 /* RightViewCtl */,
 				18A45A42195C1AC6004D4D00 /* FAQ */,
 				18A45A43195C1AD0004D4D00 /* Tweet */,
 				18A45A44195C1B13004D4D00 /* SoftWare */,
 				18A45A45195C1B32004D4D00 /* Setting */,
-				18A45A7B195CF745004D4D00 /* Model */,
 				18A458E9195BADF5004D4D00 /* Images.xcassets */,
 				186ED499195EBFB8006C2B03 /* AFNetwork */,
 				186ED4BC195EC017006C2B03 /* Helper */,
@@ -979,6 +982,8 @@
 			children = (
 				18A45A7C195CF78A004D4D00 /* NewsModel.h */,
 				18A45A7D195CF78A004D4D00 /* NewsModel.m */,
+				186ED4C0195EE958006C2B03 /* BlogModel.h */,
+				186ED4C1195EE958006C2B03 /* BlogModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1244,6 +1249,7 @@
 				18A4592F195BAF4A004D4D00 /* ASIInputStream.m in Sources */,
 				18A4592B195BAF4A004D4D00 /* ASIDataDecompressor.m in Sources */,
 				186ED4B2195EBFEF006C2B03 /* AFHTTPRequestOperation.m in Sources */,
+				186ED4C2195EE958006C2B03 /* BlogModel.m in Sources */,
 				18A45A39195C0AE2004D4D00 /* LoginViewController.m in Sources */,
 				18559256195D0C570091B265 /* RecommendView.m in Sources */,
 				18A45930195BAF4A004D4D00 /* ASINetworkQueue.m in Sources */,

@@ -18,6 +18,9 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="tableView" destination="OgA-9M-A2Z" id="obt-tF-FMF"/>
+            </connections>
         </view>
     </objects>
 </document>
