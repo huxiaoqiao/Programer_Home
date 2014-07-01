@@ -11,6 +11,9 @@
 #import "NewsModel.h"
 #import "NewsCell.h"
 #import "GDataXMLNode.h"
+#import "NewsDetail.h"
+#import "AppDelegate.h"
+
 
 @interface NewsView()
 {
@@ -56,10 +59,10 @@
     //网络上加载数据
     NSString *url = [NSString stringWithFormat:@"%@?catalog=%d&pageIndex=%d&pageSize=%d", api_news_list, 1,1, 20];
     [[AFOSCClient sharedClient] getPath:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                          if(_dataArr.count)
-            {
-                [_dataArr removeAllObjects];
-            }
+        if(_dataArr.count)
+        {
+            [_dataArr removeAllObjects];
+        }
         //XML数据解析
         GDataXMLDocument *document = [[GDataXMLDocument alloc] initWithData:operation.responseData options:0 error:nil];
         NSString *xpath = @"/oschina/newslist/news";
@@ -78,7 +81,7 @@
             //model.authoruid2 = [[[element elementsForName:@"newstype"][1] stringValue] intValue];
             [_dataArr addObject:model];
         }
-                [self.tableView reloadData];
+        [self.tableView reloadData];
         [self.tableView headerEndRefreshing];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"加载新闻失败");
@@ -93,6 +96,7 @@
     NSString *url = [NSString stringWithFormat:@"%@?catalog=%d&pageIndex=%d&pageSize=%d", api_news_list, 1,pageIndex, 20];
     [[AFOSCClient sharedClient] getPath:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         //XML数据解析
+        //NSLog(@"%@",operation.responseString);
         GDataXMLDocument *document = [[GDataXMLDocument alloc] initWithData:operation.responseData options:0 error:nil];
         NSString *xpath = @"/oschina/newslist/news";
         NSArray *arr = [document nodesForXPath:xpath error:nil];
@@ -136,7 +140,6 @@
         }
         NewsModel *model = _dataArr[indexPath.row];
         cell.titleLabel.text = model.title;
-        NSLog(@"%@",model.title);
         cell.titleLabel.font = [UIFont boldSystemFontOfSize:16];
         cell.pubDateLabel.text = [NSString stringWithFormat:@"%@ 发布于 %@ (%d评)",model.author,model.pubDate,model.commentCount];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -147,4 +150,19 @@
 {
     return 62;
 }
+
+//选中某项
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NewsModel *model = _dataArr[indexPath.row];
+    AppDelegate *appDele = [UIApplication sharedApplication].delegate;
+    NewsDetail *detailCtl = [[NewsDetail alloc] initWithNibName:@"NewsDetail" bundle:nil];
+    detailCtl.newsID = model._id;
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:detailCtl];
+    nav.navigationBar.translucent = NO;
+    nav.navigationBar.barTintColor = [UIColor colorWithRed:41/255.0 green:42/255.0 blue:56/255.0 alpha:1];
+    nav.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+    [appDele.window.rootViewController presentViewController:nav animated:YES completion:nil];
+}
+
 @end

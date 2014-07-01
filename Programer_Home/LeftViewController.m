@@ -9,10 +9,6 @@
 #import "LeftViewController.h"
 #import "CellModel.h"
 #import "LeftMenuCell.h"
-#import "FAQViewController.h"
-#import "TweetViewController.h"
-#import "SoftWareViewController.h"
-#import "SettingViewController.h"
 #import "PPRevealSideViewController.h"
 #import "AppDelegate.h"
 
@@ -83,8 +79,8 @@
             break;
             case 1:
         {
-            FAQViewController *faqCtl = [[FAQViewController alloc] initWithNibName:@"FAQViewController" bundle:nil];
-            UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:faqCtl];
+            _faqCtl = [[FAQViewController alloc] initWithNibName:@"FAQViewController" bundle:nil];
+            UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:_faqCtl];
             nav.navigationBar.translucent = NO;
             nav.navigationBar.barTintColor = [UIColor colorWithRed:83/255.0 green:200/255.0 blue:250/255.0 alpha:1];
             [self.revealSideViewController popViewControllerWithNewCenterController:nav animated:YES];
@@ -92,8 +88,8 @@
             break;
             case 2:
         {
-            TweetViewController *tweetCtl = [[TweetViewController alloc] initWithNibName:@"TweetViewController" bundle:nil];
-            UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:tweetCtl];
+            _tweetCtl = [[TweetViewController alloc] initWithNibName:@"TweetViewController" bundle:nil];
+            UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:_tweetCtl];
             nav.navigationBar.translucent = NO;
             nav.navigationBar.barTintColor = [UIColor colorWithRed:83/255.0 green:200/255.0 blue:250/255.0 alpha:1];
             [self.revealSideViewController popViewControllerWithNewCenterController:nav animated:YES];
@@ -101,8 +97,8 @@
             break;
             case 3:
         {
-            SoftWareViewController *softCtl = [[SoftWareViewController alloc] initWithNibName:@"SoftWareViewController" bundle:nil];
-            UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:softCtl];
+            _softCtl = [[SoftWareViewController alloc] initWithNibName:@"SoftWareViewController" bundle:nil];
+            UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:_softCtl];
             nav.navigationBar.translucent = NO;
             nav.navigationBar.barTintColor = [UIColor colorWithRed:83/255.0 green:200/255.0 blue:250/255.0 alpha:1];
             [self.revealSideViewController popViewControllerWithNewCenterController:nav animated:YES];
@@ -110,8 +106,8 @@
             break;
             case 4:
         {
-            SettingViewController *settingCtl = [[SettingViewController alloc] initWithNibName:@"SettingViewController" bundle:nil];
-            UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:settingCtl];
+            _settingCtl = [[SettingViewController alloc] initWithNibName:@"SettingViewController" bundle:nil];
+            UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:_settingCtl];
             nav.navigationBar.translucent = NO;
             nav.navigationBar.barTintColor = [UIColor colorWithRed:83/255.0 green:200/255.0 blue:250/255.0 alpha:1];
             [self.revealSideViewController popViewControllerWithNewCenterController:nav animated:YES];

@@ -11,6 +11,8 @@
 #import "BlogCell.h"
 #import "GDataXMLNode.h"
 #import "BlogModel.h"
+#import "AppDelegate.h"
+#import "BlogDetail.h"
 
 @interface BlogView()
 {
@@ -139,5 +141,19 @@
     }
     return cell;
 }
+// 选中某行进入博客详情
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    BlogModel *model = _dataArr[indexPath.row];
+    AppDelegate *appDele = [UIApplication sharedApplication].delegate;
+    BlogDetail *detailCtl = [[BlogDetail alloc] initWithNibName:@"BlogDetail" bundle:nil];
+    detailCtl.blogID = model._id;
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:detailCtl];
+    nav.navigationBar.translucent = NO;
+    nav.navigationBar.barTintColor = [UIColor colorWithRed:41/255.0 green:42/255.0 blue:56/255.0 alpha:1];
+    nav.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+    [appDele.window.rootViewController presentViewController:nav animated:YES completion:nil];
+}
+
 
 @end

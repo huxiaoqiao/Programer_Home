@@ -11,6 +11,7 @@
 #import "UserInfoModel.h"
 #import "PAImageView.h"
 #import "VPImageCropperViewController.h"
+#import "GDataXMLNode.h"
 
 @interface MyHomeViewController ()<UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,VPImageCropperDelegate>
 {
@@ -148,17 +149,21 @@
 #pragma mark - UIImagePickerControllerDelegate
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    [self dismissViewControllerAnimated:YES completion:nil];
-    UIImage *portraitImage = [info objectForKey:UIImagePickerControllerOriginalImage];
-    VPImageCropperViewController *imageCtl = [[VPImageCropperViewController alloc] initWithImage:portraitImage cropFrame:CGRectMake(0, 100,320, 320) limitScaleRatio:3.0];
-    imageCtl.delegate = self;
-    [self presentViewController:imageCtl animated:YES completion:nil];
+    [self dismissViewControllerAnimated:YES completion:^{
+        UIImage *portraitImage = [info objectForKey:UIImagePickerControllerOriginalImage];
+        VPImageCropperViewController *imageCtl = [[VPImageCropperViewController alloc] initWithImage:portraitImage cropFrame:CGRectMake(0, 100,320, 320) limitScaleRatio:3.0];
+        imageCtl.delegate = self;
+        [self presentViewController:imageCtl animated:YES completion:nil];
+    }];
 }
 
 #pragma mark - VPImageCropperDelegate
 - (void)imageCropper:(VPImageCropperViewController *)cropperViewController didFinished:(UIImage *)editedImage
 {
     [self startUpdatePortrait:UIImageJPEGRepresentation(editedImage, 0.75f)];
+    [cropperViewController dismissViewControllerAnimated:YES completion:^{
+        
+    }];
 }
 - (void)imageCropperDidCancel:(VPImageCropperViewController *)cropperViewController
 {
@@ -180,6 +185,13 @@
 - (void)requestPortrait:(ASIHTTPRequest *)request
 {
     NSLog(@"%@",[request responseString]);
+    GDataXMLDocument *document = [[GDataXMLDocument alloc] initWithData:[request responseData] options:0 error:nil];
+    NSString *xpath = @"/oschina/result";
+    NSArray *arr = [document nodesForXPath:xpath error:nil];
+    GDataXMLElement *element = arr[0];
+    NSString *alertString = [[element elementsForName:@"errorMessage"][0] stringValue];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"" message:alertString delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+    [alertView show];
 }
 
 - (IBAction)goToFavouriteView:(UIButton *)sender{
