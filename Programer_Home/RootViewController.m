@@ -12,7 +12,7 @@
 #import "PPRevealSideViewController.h"
 
 
-@interface RootViewController ()<leftViewDelegate>
+@interface RootViewController ()
 
 @end
 
@@ -36,7 +36,7 @@
 - (void)createSideViewCtls
 {
     LeftViewController *left = [[LeftViewController alloc] initWithNibName:@"LeftViewController" bundle:nil];
-    left.delegate = self;
+    
     RightViewController *right = [[RightViewController alloc] initWithNibName:@"RightViewController" bundle:nil];
     
     [self.revealSideViewController preloadViewController:left forSide:PPRevealSideDirectionLeft];
@@ -89,9 +89,5 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)testMethod
-{
-    NSLog(@"I am delegate!");
-}
 
 @end

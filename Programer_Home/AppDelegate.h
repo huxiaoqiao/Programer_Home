@@ -8,20 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "Reachability.h"
-#import "ASIHTTPRequest.h"
-@interface AppDelegate : UIResponder <UIApplicationDelegate,ASIHTTPRequestDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate>
 {
     Reachability * hostReach;//网络状态
     NetworkStatus netstatus;
-    ASIHTTPRequest *request1;
-    ASIHTTPRequest *request2;
 }
 @property (strong, nonatomic) UIWindow *window;
 @property (nonatomic) BOOL isConnected;//判断网络是否已经连接
 @property (nonatomic,strong) UINavigationController *nav;
 
-@property (nonatomic,copy) NSString *code;
-@property (nonatomic,copy) NSString *access_token;
-- (void)getTheCode;
-- (void)getTheAccess_tokenWithCode:(NSString *)code;
 @end

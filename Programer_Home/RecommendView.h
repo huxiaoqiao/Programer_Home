@@ -9,5 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface RecommendView : UIView
-
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+- (void)loadTableView;
+- (void)setupRefresh;
+- (void)headerRefreshing;
+- (void)autoRefresh;
 @end

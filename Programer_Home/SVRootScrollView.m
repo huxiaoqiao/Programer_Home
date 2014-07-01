@@ -62,6 +62,7 @@
     NSArray *arr3 = [[NSBundle mainBundle] loadNibNamed:@"RecommendView" owner:self options:nil];
     RecommendView *recommend = arr3[0];
     recommend.tag = 202;
+    [recommend loadTableView];
     
     news.center = CGPointMake(160, [SVGloble shareInstance].globleHeight / 2);
     blog.center = CGPointMake(160 + 320, [SVGloble shareInstance].globleHeight / 2);
@@ -126,6 +127,7 @@
         {
             RecommendView *recommend = (RecommendView *)[self viewWithTag:200 + page];
             //加载数据
+            [recommend autoRefresh];
         }
             break;
         default:

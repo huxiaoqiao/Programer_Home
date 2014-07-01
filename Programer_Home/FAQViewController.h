@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PostTopScrollView.h"
+#import "PostRootScrollView.h"
 
 @interface FAQViewController : UIViewController
+@property (nonatomic,strong) PostTopScrollView *topScrollView;
+@property (nonatomic,strong) PostRootScrollView *rootScrollView;
 
 @end

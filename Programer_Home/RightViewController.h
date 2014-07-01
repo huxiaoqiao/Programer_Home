@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PAImageView.h"
 
 @interface RightViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UIImageView *imageView1;
@@ -15,6 +16,12 @@
 @property (weak, nonatomic) IBOutlet UIImageView *imageView4;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView5;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView6;
+@property (weak, nonatomic) IBOutlet UIButton *loginBnt;
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UIView *portraitView;
+@property (nonatomic,strong) PAImageView *paImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *portraitImageView;
+
 
 - (IBAction)Login:(UIButton *)sender;
 - (IBAction)loginOut:(UIButton *)sender;
@@ -26,4 +33,9 @@
 - (IBAction)btn5Pressed:(UIButton *)sender;
 - (IBAction)btn6Pressed:(UIButton *)sender;
 
+//判断是否登录
+@property (nonatomic) BOOL isLogin;
+
+//传Uid
+@property (nonatomic,copy) NSString *uid;
 @end

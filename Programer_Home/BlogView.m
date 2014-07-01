@@ -49,7 +49,7 @@
 - (void)headerRefreshing
 {
     //网络上加载数据
-    NSString *url = [NSString stringWithFormat:@"%@?pageIndex=%d&pageSize=%d", api_blog_list, 1, 20];
+    NSString *url = [NSString stringWithFormat:@"%@?type=latest&pageIndex=%d&pageSize=%d", api_blog_list, 1, 20];
     [[AFOSCClient sharedClient] getPath:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
             if(_dataArr.count)
             {
@@ -85,7 +85,7 @@
 {
    
     pageIndex ++;
-    NSString *url = [NSString stringWithFormat:@"%@?pageIndex=%d&pageSize=%d", api_blog_list,pageIndex, 20];
+    NSString *url = [NSString stringWithFormat:@"%@?type=latest&pageIndex=%d&pageSize=%d", api_blog_list,pageIndex, 20];
     [[AFOSCClient sharedClient] getPath:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         //XML数据解析
         GDataXMLDocument *document = [[GDataXMLDocument alloc] initWithData:operation.responseData options:0 error:nil];

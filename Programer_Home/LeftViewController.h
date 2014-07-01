@@ -8,13 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol leftViewDelegate <NSObject>
-- (void)testMethod;
-@end
+
 
 @interface LeftViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
-@property (nonatomic,weak) id<leftViewDelegate>delegate;
 
 @end
