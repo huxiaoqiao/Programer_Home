@@ -114,6 +114,11 @@ NSString * const spm_identifier = @"spm.imagecache.tg";
 - (void)setImageURL:(NSString *)URL {
     [_containerImageView setImageWithURL:[NSURL URLWithString:URL]];
 }
+//设置默认图片
+- (void)setDefaultImage
+{
+    [_containerImageView setImage:[UIImage imageNamed:@"avatar_noimg.jpg"]];
+}
 
 - (void)updateWithImage:(UIImage *)image animated:(BOOL)animated {
     

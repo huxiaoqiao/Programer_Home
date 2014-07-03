@@ -19,6 +19,12 @@
     return self;
 }
 
+- (void)addImageView
+{
+    _paImageView = [[PAImageView alloc] initWithFrame:CGRectMake(0, 0, 50, 50) backgroundProgressColor:[UIColor lightTextColor] progressColor:[UIColor grayColor]];
+    [self.portraitView addSubview:_paImageView];
+}
+
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];

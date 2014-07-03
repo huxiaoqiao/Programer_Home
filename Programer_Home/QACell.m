@@ -10,13 +10,20 @@
 
 @implementation QACell
 
+
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        // Initialization code
+        
     }
     return self;
+}
+
+- (void)addImageView
+{
+    _paImageView = [[PAImageView alloc] initWithFrame:CGRectMake(0, 0, 50, 50) backgroundProgressColor:[UIColor lightTextColor] progressColor:[UIColor grayColor]];
+    [self.portraitView addSubview:_paImageView];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

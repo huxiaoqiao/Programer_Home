@@ -9,6 +9,7 @@
 #import "RightViewController.h"
 #import "LoginViewController.h"
 #import "MyHomeViewController.h"
+#import "FavoriteView.h"
 
 @interface RightViewController ()<getTheUserInfo,UIAlertViewDelegate>
 {
@@ -74,6 +75,15 @@
             } completion:^(BOOL finished) {
                 [UIView animateWithDuration:0.1 animations:^{
                     self.imageView1.transform = zero;
+                    FavoriteView *favCtl = [[FavoriteView alloc] initWithNibName:@"FavoriteView" bundle:nil];
+                    if(self.uid != nil)
+                    {
+                        favCtl.uid = self.uid;
+                    }
+                    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:favCtl];
+                    nav.navigationBar.translucent = NO;
+                    nav.navigationBar.barTintColor = [UIColor colorWithRed:83/255.0 green:200/255.0 blue:250/255.0 alpha:1];
+                    [self presentViewController:nav animated:YES completion:nil];
                 }];
             }];
         }];

@@ -10,6 +10,7 @@
 
 @interface NewsView : UIView<UITableViewDataSource,UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+
 - (void)loadTableView;
 - (void)setupRefresh;
 - (void)headerRefreshing;

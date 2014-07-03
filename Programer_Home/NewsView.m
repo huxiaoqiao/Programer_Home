@@ -163,6 +163,7 @@
     nav.navigationBar.barTintColor = [UIColor colorWithRed:41/255.0 green:42/255.0 blue:56/255.0 alpha:1];
     nav.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     [appDele.window.rootViewController presentViewController:nav animated:YES completion:nil];
+    
 }
 
 @end

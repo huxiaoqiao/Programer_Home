@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TweetRootScrollView.h"
+#import "TweetTopScrollView.h"
 
 @interface TweetViewController : UIViewController
-
+@property (nonatomic,strong) TweetRootScrollView *rootScrollView;
+@property (nonatomic,strong) TweetTopScrollView *topScrollView;
 @end

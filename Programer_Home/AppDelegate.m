@@ -39,7 +39,7 @@
     RootViewController *viewController = [[RootViewController alloc] initWithNibName:@"RootViewController" bundle:nil];
     _nav = [[UINavigationController alloc] initWithRootViewController:viewController];
     _nav.navigationBar.translucent = NO;
-    _nav.navigationBar.barTintColor = [UIColor colorWithRed:41/255.0 green:42/255.0 blue:56/255.0 alpha:1];
+    _nav.navigationBar.barTintColor = [UIColor colorWithRed:83/255.0 green:200/255.0 blue:250/255.0 alpha:1];
     PPRevealSideViewController *revealCtl = [[PPRevealSideViewController alloc] initWithRootViewController:_nav];
     self.window.rootViewController = revealCtl;
 }

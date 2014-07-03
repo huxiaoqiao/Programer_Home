@@ -13,10 +13,6 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="69"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="f9d-tU-gFK">
-                        <rect key="frame" x="9" y="12" width="50" height="50"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                    </imageView>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="UhU-GH-wRT">
                         <rect key="frame" x="67" y="5" width="218" height="35"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -43,12 +39,17 @@
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <view contentMode="scaleToFill" id="ql9-ki-yVe">
+                        <rect key="frame" x="9" y="10" width="50" height="50"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </view>
                 </subviews>
             </tableViewCellContentView>
             <connections>
                 <outlet property="answerCountLabel" destination="RTb-Kk-oE2" id="70M-V9-aEP"/>
                 <outlet property="authorLabel" destination="DsY-fK-oGO" id="C5d-qu-YkE"/>
-                <outlet property="portraitView" destination="f9d-tU-gFK" id="fAi-NO-90P"/>
+                <outlet property="portraitView" destination="ql9-ki-yVe" id="Vfz-V3-d6P"/>
                 <outlet property="titleLabel" destination="UhU-GH-wRT" id="VJq-lT-r9J"/>
             </connections>
         </tableViewCell>

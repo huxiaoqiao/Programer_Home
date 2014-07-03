@@ -7,6 +7,7 @@
 //
 
 #import "TweetViewController.h"
+#import "PPRevealSideViewController.h"
 
 @interface TweetViewController ()
 
@@ -18,7 +19,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+       
     }
     return self;
 }
@@ -26,7 +27,36 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    [self createBarButtons];
+    [self createScrollView];
+}
+- (void)createBarButtons
+{
+    UIButton *bnt1 = [UIButton buttonWithType:UIButtonTypeCustom];
+    bnt1.frame = CGRectMake(0, 0, 25, 25);
+    [bnt1 setBackgroundImage:[UIImage imageNamed:@"nav_left"] forState:UIControlStateNormal];
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:bnt1];
+    self.navigationItem.leftBarButtonItem = leftItem;
+    [bnt1 addTarget:self action:@selector(leftShow) forControlEvents:UIControlEventTouchUpInside];
+    //编辑按钮
+    
+}
+- (void)leftShow
+{
+    [self.revealSideViewController pushOldViewControllerOnDirection:PPRevealSideDirectionLeft animated:YES];
+}
+
+- (void)createScrollView
+{
+    _topScrollView = [TweetTopScrollView shareInstance];
+    _rootScrollView = [TweetRootScrollView shareInstance];
+    _topScrollView.nameArray = @[@"最新动弹",@"热门动弹",@"我的动弹"];
+    _rootScrollView.viewNameArray = @[@"最新动弹",@"热门动弹",@"我的动弹"];
+    
+    [self.view addSubview:_topScrollView];
+    [self.view addSubview:_rootScrollView];
+    [_topScrollView initWithNameButtons];
+    [_rootScrollView initWithViews];
 }
 
 - (void)didReceiveMemoryWarning

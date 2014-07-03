@@ -7,12 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PAImageView.h"
 
 @interface QACell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UIImageView *portriatView;
+@property (weak, nonatomic) IBOutlet UIView *portraitView;
+
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *authorLabel;
 @property (weak, nonatomic) IBOutlet UILabel *answerCountLabel;
-
-
+@property (nonatomic,strong) PAImageView *paImageView;
+- (void)addImageView;
 @end

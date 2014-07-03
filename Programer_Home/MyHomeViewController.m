@@ -12,6 +12,7 @@
 #import "PAImageView.h"
 #import "VPImageCropperViewController.h"
 #import "GDataXMLNode.h"
+#import "FavoriteView.h"
 
 @interface MyHomeViewController ()<UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,VPImageCropperDelegate>
 {
@@ -184,7 +185,7 @@
 
 - (void)requestPortrait:(ASIHTTPRequest *)request
 {
-    NSLog(@"%@",[request responseString]);
+    
     GDataXMLDocument *document = [[GDataXMLDocument alloc] initWithData:[request responseData] options:0 error:nil];
     NSString *xpath = @"/oschina/result";
     NSArray *arr = [document nodesForXPath:xpath error:nil];
@@ -195,5 +196,12 @@
 }
 
 - (IBAction)goToFavouriteView:(UIButton *)sender{
+    FavoriteView *favCtl = [[FavoriteView alloc] initWithNibName:@"FavoriteView" bundle:nil];
+    favCtl.uid = self.uid;
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:favCtl];
+    nav.navigationBar.translucent = NO;
+    nav.navigationBar.barTintColor = [UIColor colorWithRed:83/255.0 green:200/255.0 blue:250/255.0 alpha:1];
+    [self presentViewController:nav animated:YES completion:nil];
+    
 }
 @end

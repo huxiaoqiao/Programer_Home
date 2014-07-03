@@ -12,6 +12,8 @@
 #import "GDataXMLNode.h"
 #import "QAModel.h"
 #import "UIImageView+WebCache.h"
+#import "PostDetail.h"
+#import "AppDelegate.h"
 
 @interface JobView()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -130,10 +132,15 @@
         {
             NSArray *arr = [[NSBundle mainBundle] loadNibNamed:@"JobCell" owner:self options:nil];
             cell = arr[0];
+            [cell addImageView];
         }
         QAModel *model = _dataArr[indexPath.row];
-        cell.portraitView.layer.cornerRadius = 4;
-        [cell.portraitView setImageWithURL:[NSURL URLWithString:model.portraitUrl] placeholderImage:[UIImage imageNamed:@""]];
+        if([model.portraitUrl isEqualToString:@""])
+        {
+            [cell.paImageView setDefaultImage];
+        }else{
+            [cell.paImageView setImageURL:model.portraitUrl];
+        }
         cell.titleLabel.text = model.title;
         cell.titleLabel.font = [UIFont boldSystemFontOfSize:15];
         cell.authorLabel.text = [NSString stringWithFormat:@"%@ 发布于 %@",model.author,model.pubDate];
@@ -141,6 +148,18 @@
     }
     return cell;
 }
-
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    QAModel *model = _dataArr[indexPath.row];
+    PostDetail *detailCtl = [[PostDetail alloc] initWithNibName:@"PostDetail" bundle:nil];
+    NSLog(@"%d",model._id);
+    detailCtl.postID = model._id;
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:detailCtl];
+    nav.navigationBar.translucent = NO;
+    nav.navigationBar.barTintColor = [UIColor colorWithRed:83/255.0 green:200/255.0 blue:250/255.0 alpha:1];
+    AppDelegate *appDele = [UIApplication sharedApplication].delegate;
+    nav.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+    [appDele.window.rootViewController presentViewController:nav animated:YES completion:nil];
+}
 @end
 

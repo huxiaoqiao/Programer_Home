@@ -13,10 +13,6 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="69"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="9aO-0p-zeP">
-                        <rect key="frame" x="9" y="12" width="50" height="50"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                    </imageView>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Gu3-aa-DxD">
                         <rect key="frame" x="67" y="5" width="218" height="35"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -43,12 +39,17 @@
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <view contentMode="scaleToFill" id="rHm-EB-04E">
+                        <rect key="frame" x="9" y="10" width="50" height="50"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </view>
                 </subviews>
             </tableViewCellContentView>
             <connections>
                 <outlet property="answerCountLabel" destination="Oae-uf-mCi" id="45O-DZ-gUI"/>
                 <outlet property="authorLabel" destination="420-2y-IHj" id="fpC-DB-Xpo"/>
-                <outlet property="portraitView" destination="9aO-0p-zeP" id="Fxv-Kc-Fff"/>
+                <outlet property="portraitView" destination="rHm-EB-04E" id="xC8-YB-FMb"/>
                 <outlet property="titleLabel" destination="Gu3-aa-DxD" id="p3p-oN-bB6"/>
             </connections>
         </tableViewCell>
