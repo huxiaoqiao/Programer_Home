@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SVTopScrollView : UIScrollView <UIScrollViewDelegate>
+@interface NewsTopScrollView : UIScrollView <UIScrollViewDelegate>
 {
     NSArray *nameArray;
     NSInteger userSelectedChannelID;        //点击按钮选择名字ID
@@ -23,7 +23,7 @@
 
 @property (nonatomic, assign) NSInteger scrollViewSelectedChannelID;
 
-+ (SVTopScrollView *)shareInstance;
++ (NewsTopScrollView *)shareInstance;
 /**
  *  加载顶部标签
  */

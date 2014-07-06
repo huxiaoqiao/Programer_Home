@@ -137,7 +137,7 @@
         }
         BlogModel *model = _dataArr[indexPath.row];
         cell.titleLabel.text = model.title;
-        cell.titleLabel.font = [UIFont boldSystemFontOfSize:16];
+        //cell.titleLabel.font = [UIFont boldSystemFontOfSize:16];
         cell.authorLabel.text = [NSString stringWithFormat:@"%@ %@ %@ (%d评)",model.author,model.type==1?@"原创":@"转载",model.pubDate,model.commentCount];
     }
     return cell;

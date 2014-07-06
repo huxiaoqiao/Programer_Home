@@ -11,8 +11,11 @@
 @interface FavoriteModel : NSObject
 @property int objid;
 @property int type;
+@property (nonatomic,copy) NSString *searchType;
 @property (nonatomic,copy) NSString *title;
 @property (nonatomic,copy) NSString *url;
+@property (nonatomic,copy) NSString *pubDate;
+@property (nonatomic,copy) NSString *author;
 @end
 /*
  <oschina>

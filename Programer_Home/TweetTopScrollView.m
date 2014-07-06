@@ -12,7 +12,7 @@
 
 
 //按钮空隙
-#define BUTTONGAP 65
+#define BUTTONGAP 40
 //滑条宽度
 #define CONTENTSIZEX 320
 //按钮id
@@ -56,7 +56,7 @@
 
 - (void)initWithNameButtons
 {
-    float xPos = 18;
+    float xPos = 15;
     for (int i = 0; i < [self.nameArray count]; i++) {
         
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -73,7 +73,7 @@
         [button addTarget:self action:@selector(selectNameButton:) forControlEvents:UIControlEventTouchUpInside];
         
         int buttonWidth = [title sizeWithFont:button.titleLabel.font
-                            constrainedToSize:CGSizeMake(150, 30)
+                            constrainedToSize:CGSizeMake(50, 300)
                                 lineBreakMode:NSLineBreakByClipping].width;
         
         button.frame = CGRectMake(xPos, 0, buttonWidth+BUTTONGAP, 30);
@@ -89,7 +89,7 @@
     
     self.contentSize = CGSizeMake(xPos, 30);
     
-    shadowImageView = [[UIImageView alloc] initWithFrame:CGRectMake(18, 0, [[_buttonWithArray objectAtIndex:0] floatValue], 30)];
+    shadowImageView = [[UIImageView alloc] initWithFrame:CGRectMake(15, 0, [[_buttonWithArray objectAtIndex:0] floatValue], 30)];
     [shadowImageView setImage:[UIImage imageNamed:@"red_line_and_shadow.png"]];
     [self addSubview:shadowImageView];
 }
@@ -135,11 +135,11 @@
 - (void)adjustScrollViewContentX:(UIButton *)sender
 {
     float originX = [[_buttonOriginXArray objectAtIndex:BUTTONID] floatValue];
-    float width = [[_buttonWithArray objectAtIndex:BUTTONID] floatValue];
-    
-    if (sender.frame.origin.x - self.contentOffset.x > CONTENTSIZEX-(BUTTONGAP+width)) {
-        [self setContentOffset:CGPointMake(originX - 30, 0)  animated:YES];
-    }
+//    float width = [[_buttonWithArray objectAtIndex:BUTTONID] floatValue];
+//    
+//    if (sender.frame.origin.x - self.contentOffset.x > CONTENTSIZEX-(BUTTONGAP+width)) {
+//        [self setContentOffset:CGPointMake(originX - 30, 0)  animated:YES];
+//    }
     
     if (sender.frame.origin.x - self.contentOffset.x < 5) {
         [self setContentOffset:CGPointMake(originX,0)  animated:YES];
@@ -177,11 +177,11 @@
 -(void)setScrollViewContentOffset
 {
     float originX = [[_buttonOriginXArray objectAtIndex:BUTTONSELECTEDID] floatValue];
-    float width = [[_buttonWithArray objectAtIndex:BUTTONSELECTEDID] floatValue];
-    
-    if (originX - self.contentOffset.x > CONTENTSIZEX-(BUTTONGAP+width)) {
-        [self setContentOffset:CGPointMake(originX - 30, 0)  animated:YES];
-    }
+//    float width = [[_buttonWithArray objectAtIndex:BUTTONSELECTEDID] floatValue];
+//    
+//    if (originX - self.contentOffset.x > CONTENTSIZEX-(BUTTONGAP+width)) {
+//        [self setContentOffset:CGPointMake(originX - 30, 0)  animated:YES];
+//    }
     
     if (originX - self.contentOffset.x < 5) {
         [self setContentOffset:CGPointMake(originX,0)  animated:YES];

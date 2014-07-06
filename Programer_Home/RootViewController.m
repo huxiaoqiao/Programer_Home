@@ -22,7 +22,13 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 40, 30)];
+        label.text = @"资讯";
+        label.font = [UIFont boldSystemFontOfSize:16];
+        label.textColor = [UIColor whiteColor];
+        label.backgroundColor = [UIColor clearColor];
+        label.textAlignment = NSTextAlignmentCenter;
+        self.navigationItem.titleView = label;
     }
     return self;
 }
@@ -61,8 +67,8 @@
 }
 - (void)createScrollViews
 {
-    _topScrollView = [SVTopScrollView shareInstance];
-    _rootScrollView = [SVRootScrollView shareInstance];
+    _topScrollView = [NewsTopScrollView shareInstance];
+    _rootScrollView = [NewsRootScrollView shareInstance];
     _topScrollView.nameArray = @[@"资讯",@"博客",@"推荐阅读"];
     _rootScrollView.viewNameArray = @[@"资讯",@"博客",@"推荐阅读"];
     

@@ -20,7 +20,13 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 40, 30)];
+        label.text = @"帖子";
+        label.font = [UIFont boldSystemFontOfSize:16];
+        label.textColor = [UIColor whiteColor];
+        label.backgroundColor = [UIColor clearColor];
+        label.textAlignment = NSTextAlignmentCenter;
+        self.navigationItem.titleView = label;
     }
     return self;
 }

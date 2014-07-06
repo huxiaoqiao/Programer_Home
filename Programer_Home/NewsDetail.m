@@ -15,6 +15,7 @@
 @interface NewsDetail ()<UIWebViewDelegate>
 {
     BOOL isFavoriteCliked;
+    UIButton *_favoriteBtn;
 }
 @end
 
@@ -75,6 +76,13 @@
         model.softwarename = [[element elementsForName:@"softwarename"][0] stringValue];
         model.favorite = [[[element elementsForName:@"favorite"][0] stringValue] boolValue];
     }
+    if(model.favorite == 1)
+    {
+        [_favoriteBtn setImage:[UIImage imageNamed:@"account_1_s"] forState:UIControlStateNormal];
+    }else
+    {
+        [_favoriteBtn setImage:[UIImage imageNamed:@"account_1"] forState:UIControlStateNormal];
+    }
     NSString *xpath2 = @"/oschina/news/relativies/relative";
     NSArray *arr2 = [document nodesForXPath:xpath2 error:nil];
     model.relativies = [NSMutableArray array];
@@ -128,17 +136,23 @@
 }
 - (void)createRightBnt
 {
-    UIButton *favoriteBnt = [UIButton buttonWithType:UIButtonTypeCustom];
-    favoriteBnt.frame = CGRectMake(0, 0, 30, 30);
-    [favoriteBnt setImage:[UIImage imageNamed:@"account_1"] forState:UIControlStateNormal];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:favoriteBnt];
-    [favoriteBnt addTarget:self action:@selector(clickFavoriteBnt:) forControlEvents:UIControlEventTouchUpInside];
+    _favoriteBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _favoriteBtn.frame = CGRectMake(0, 0, 30, 30);
+    [_favoriteBtn setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:_favoriteBtn];
+    [_favoriteBtn addTarget:self action:@selector(clickFavoriteBnt:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 
 - (void)backToFrontView
 {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    if(_isFavoriteCtlPush)
+    {
+        [self.navigationController popViewControllerAnimated:YES];
+        _isFavoriteCtlPush = NO;
+    }else{
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 //收藏键被点击
 - (void)clickFavoriteBnt:(UIButton *)sender;

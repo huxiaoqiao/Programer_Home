@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SVRootScrollView : UIScrollView <UIScrollViewDelegate>
+@interface NewsRootScrollView : UIScrollView <UIScrollViewDelegate>
 {
     NSArray *viewNameArray;
     CGFloat userContentOffsetX;
@@ -16,7 +16,7 @@
 }
 @property (nonatomic, retain) NSArray *viewNameArray;
 
-+ (SVRootScrollView *)shareInstance;
++ (NewsRootScrollView *)shareInstance;
 
 - (void)initWithViews;
 /**

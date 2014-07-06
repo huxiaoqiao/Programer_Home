@@ -1,29 +1,29 @@
 //
-//  BlogDetail.m
+//  SoftWareDetail.m
 //  Programer_Home
 //
-//  Created by 胡晓桥 on 14-7-1.
+//  Created by 胡晓桥 on 14-7-3.
 //  Copyright (c) 2014年 胡晓桥. All rights reserved.
 //
 
-#import "BlogDetail.h"
+#import "SoftWareDetail.h"
+#import "SoftwareModel.h"
 #import "GDataXMLNode.h"
-#import "SingleBlogModel.h"
 
-@interface BlogDetail ()<UIWebViewDelegate>
+@interface SoftWareDetail ()<UIWebViewDelegate>
 {
     BOOL isFavoriteCliked;
 }
 @end
 
-@implementation BlogDetail
+@implementation SoftWareDetail
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 40, 30)];
-        label.text = @"博客详情页";
+        label.text = @"软件详情";
         label.font = [UIFont boldSystemFontOfSize:16];
         label.textColor = [UIColor whiteColor];
         label.backgroundColor = [UIColor clearColor];
@@ -36,53 +36,82 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.webView.delegate = self;
     [self createBackBnt];
     [self createRightBnt];
+    self.webView.delegate = self;
     [self loadDataFromNetwork];
+
 }
 
 - (void)loadDataFromNetwork
 {
-    NSString *url = [NSString stringWithFormat:@"%@?id=%d",api_blog_detail, _blogID];
+    NSString *url = [NSString stringWithFormat:@"%@?ident=%@",api_software_detail, _softwareName];
     [[AFOSCClient sharedClient] getPath:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        //NSLog(@"%@",operation.responseString);
+        NSLog(@"%@",operation.responseString);
         [self loadDataWithXMLData:operation.responseData];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"加载详情失败");
     }];
 }
-//XML解析
+
 - (void)loadDataWithXMLData:(NSData *)data
 {
     GDataXMLDocument *document = [[GDataXMLDocument alloc] initWithData:data options:0 error:nil];
-    NSString *xpath = @"/oschina/blog";
+    NSString *xpath = @"/oschina/software";
     NSArray *arr = [document nodesForXPath:xpath error:nil];
-    SingleBlogModel *model = [[SingleBlogModel alloc] init];
+     SoftwareModel *model = [[SoftwareModel alloc] init];
     for(GDataXMLElement *element in arr)
     {
+        model._id = [[[element elementsForName:@"id"][0] stringValue] intValue];
         model.title = [[element elementsForName:@"title"][0] stringValue];
         model.url = [[element elementsForName:@"url"][0] stringValue];
-        model.where = [[element elementsForName:@"where"][0] stringValue];
-        model.commentCount = [[[element elementsForName:@"commentCount"][0] stringValue] intValue];
+        model.extensionTitle = [[element elementsForName:@"extensionTitle"][0] stringValue];
+        model.license = [[element elementsForName:@"license"][0] stringValue];
         model.body = [[element elementsForName:@"body"][0] stringValue];
-        model.author = [[element elementsForName:@"author"][0] stringValue];
-        model.authorid = [[[element elementsForName:@"authorid"][0] stringValue] intValue];
-        model.documentType = [[[element elementsForName:@"documentType"][0] stringValue] intValue];
-        model.pubDate = [[element elementsForName:@"pubDate"][0] stringValue];
+        model.homePage = [[element elementsForName:@"homepage"][0] stringValue];
+        model.document = [[element elementsForName:@"document"][0] stringValue];
+        model.download = [[element elementsForName:@"download"][0] stringValue];
+        model.logo = [[element elementsForName:@"logo"][0] stringValue];
+        model.language = [[element elementsForName:@"language"][0] stringValue];
+        model.os = [[element elementsForName:@"os"][0] stringValue];
+        model.recordTime = [[element elementsForName:@"recordtime"][0] stringValue];
         model.favorite = [[[element elementsForName:@"favorite"][0] stringValue] boolValue];
     }
-    NSString *author_str = [NSString stringWithFormat:@"<a href='http://my.oschina.net/u/%d'>%@</a>&nbsp;发表于&nbsp;%@",model.authorid, model.author,model.pubDate];
-    NSString *html = [NSString stringWithFormat:@"<body style='background-color:#EBEBF3'>%@<div id='oschina_title'>%@</div><div id='oschina_outline'>%@</div><hr/><div id='oschina_body'>%@</div>%@</body>",HTML_Style, model.title,author_str,model.body,HTML_Bottom];
+    //刷新控件
+    NSString *str_title = [NSString stringWithFormat:@"%@ %@", model.extensionTitle,model.title];
+    NSString *tail = [NSString stringWithFormat:@"<div>授权协议: %@</div><div>开发语言: %@</div><div>操作系统: %@</div><div>收录时间: %@</div>",
+                      model.license,model.language,model.os,model.recordTime];
+    tail = [NSString stringWithFormat:@"<div><table><tr><td style='font-weight:bold'>授权协议:&nbsp;</td><td>%@</td></tr><tr><td style='font-weight:bold'>开发语言:</td><td>%@</td></tr><tr><td style='font-weight:bold'>操作系统:</td><td>%@</td></tr><tr><td style='font-weight:bold'>收录时间:</td><td>%@</td></tr></table></div>",model.license,model.language,model.os,model.recordTime];
+    
+    NSString *html = [NSString stringWithFormat:@"<body style='background-color:#EBEBF3'>%@<div id='oschina_title'><img src='%@' width='34' height='34'/>%@</div><hr/><div id='oschina_body'>%@</div><div>%@</div>%@%@</body>",HTML_Style,model.logo,str_title,model.body,tail, [self getButtonString:model.homePage andDocument:model.document andDownload:model.download],HTML_Bottom];
+    
+   
     [self.webView loadHTMLString:html baseURL:nil];
 }
 
-#pragma mark - UIWebViewDelegate
-//浏览器链接处理
+- (NSString *)getButtonString:(NSString *)homePage andDocument:(NSString *)document andDownload:(NSString *)download
+{
+    NSString *strHomePage = @"";
+    NSString *strDocument = @"";
+    NSString *strDownload = @"";
+    if ([homePage isEqualToString:@""] == NO) {
+        strHomePage = [NSString stringWithFormat:@"<a href=%@><input type='button' value='软件首页' style='font-size:14px;'/></a>", homePage];
+    }
+    if ([document isEqualToString:@""] == NO) {
+        strDocument = [NSString stringWithFormat:@"<a href=%@><input type='button' value='软件文档' style='font-size:14px;'/></a>", document];
+    }
+    if ([download isEqualToString:@""] == NO) {
+        strDownload = [NSString stringWithFormat:@"<a href=%@><input type='button' value='软件下载' style='font-size:14px;'/></a>", download];
+    }
+    return [NSString stringWithFormat:@"<p>%@&nbsp;&nbsp;%@&nbsp;&nbsp;%@</p>", strHomePage, strDocument, strDownload];
+}
+#pragma 浏览器链接处理
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
     return YES;
 }
+
+
 //UI
 - (void)createBackBnt
 {
@@ -108,7 +137,7 @@
         [self.navigationController popViewControllerAnimated:YES];
         _isFavoriteCtlPush = NO;
     }else{
-       [self dismissViewControllerAnimated:YES completion:nil];
+        [self dismissViewControllerAnimated:YES completion:nil];
     }
     
 }
@@ -127,7 +156,6 @@
         //取消收藏-------------------------
     }
 }
-
 
 - (void)didReceiveMemoryWarning
 {

@@ -1,15 +1,15 @@
 //
-//  BlogDetail.h
+//  SoftWareDetail.h
 //  Programer_Home
 //
-//  Created by 胡晓桥 on 14-7-1.
+//  Created by 胡晓桥 on 14-7-3.
 //  Copyright (c) 2014年 胡晓桥. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-@interface BlogDetail : UIViewController
+@interface SoftWareDetail : UIViewController
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
-@property int blogID;
+@property (nonatomic,copy) NSString *softwareName;
 @property BOOL isFavoriteCtlPush;
 @end

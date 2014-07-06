@@ -6,9 +6,9 @@
 //  Copyright (c) 2013年 Chen Yaoqiang. All rights reserved.
 //
 
-#import "SVTopScrollView.h"
+#import "NewsTopScrollView.h"
 #import "SVGloble.h"
-#import "SVRootScrollView.h"
+#import "NewsRootScrollView.h"
 
 
 //按钮空隙
@@ -21,13 +21,13 @@
 #define BUTTONSELECTEDID (scrollViewSelectedChannelID - 100)
 
 
-@implementation SVTopScrollView
+@implementation NewsTopScrollView
 
 @synthesize nameArray;
 @synthesize scrollViewSelectedChannelID;
 
-+ (SVTopScrollView *)shareInstance {
-    static SVTopScrollView *_instance;
++ (NewsTopScrollView *)shareInstance {
+    static NewsTopScrollView *_instance;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         _instance=[[self alloc] initWithFrame:CGRectMake(0,0, CONTENTSIZEX, 30)];
@@ -119,7 +119,7 @@
         } completion:^(BOOL finished) {
             if (finished) {
                 //设置新闻页出现
-                [[SVRootScrollView shareInstance] setContentOffset:CGPointMake(BUTTONID*320, 0) animated:YES];
+                [[NewsRootScrollView shareInstance] setContentOffset:CGPointMake(BUTTONID*320, 0) animated:YES];
                 //赋值滑动列表选择频道ID
                 scrollViewSelectedChannelID = sender.tag;
             }
@@ -135,11 +135,11 @@
 - (void)adjustScrollViewContentX:(UIButton *)sender
 {
     float originX = [[_buttonOriginXArray objectAtIndex:BUTTONID] floatValue];
-    float width = [[_buttonWithArray objectAtIndex:BUTTONID] floatValue];
-    
-    if (sender.frame.origin.x - self.contentOffset.x > CONTENTSIZEX-(BUTTONGAP+width)) {
-        [self setContentOffset:CGPointMake(originX - 30, 0)  animated:YES];
-    }
+//    float width = [[_buttonWithArray objectAtIndex:BUTTONID] floatValue];
+//    
+//    if (sender.frame.origin.x - self.contentOffset.x > CONTENTSIZEX-(BUTTONGAP+width)) {
+//        [self setContentOffset:CGPointMake(originX - 30, 0)  animated:YES];
+//    }
     
     if (sender.frame.origin.x - self.contentOffset.x < 5) {
         [self setContentOffset:CGPointMake(originX,0)  animated:YES];
@@ -177,11 +177,11 @@
 -(void)setScrollViewContentOffset
 {
     float originX = [[_buttonOriginXArray objectAtIndex:BUTTONSELECTEDID] floatValue];
-    float width = [[_buttonWithArray objectAtIndex:BUTTONSELECTEDID] floatValue];
-    
-    if (originX - self.contentOffset.x > CONTENTSIZEX-(BUTTONGAP+width)) {
-        [self setContentOffset:CGPointMake(originX - 30, 0)  animated:YES];
-    }
+//    float width = [[_buttonWithArray objectAtIndex:BUTTONSELECTEDID] floatValue];
+//    
+//    if (originX - self.contentOffset.x > CONTENTSIZEX-(BUTTONGAP+width)) {
+//        [self setContentOffset:CGPointMake(originX - 30, 0)  animated:YES];
+//    }
     
     if (originX - self.contentOffset.x < 5) {
         [self setContentOffset:CGPointMake(originX,0)  animated:YES];

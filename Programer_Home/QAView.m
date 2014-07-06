@@ -143,7 +143,7 @@
             [cell.paImageView setImageURL:model.portraitUrl];
         }
         cell.titleLabel.text = model.title;
-        cell.titleLabel.font = [UIFont boldSystemFontOfSize:15];
+        //cell.titleLabel.font = [UIFont boldSystemFontOfSize:15];
         cell.authorLabel.text = [NSString stringWithFormat:@"%@ 发布于 %@",model.author,model.pubDate];
         cell.answerCountLabel.text = [NSString stringWithFormat:@"%d",model.answerCount];
     }

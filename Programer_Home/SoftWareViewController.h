@@ -9,5 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface SoftWareViewController : UIViewController
+@property (weak, nonatomic) IBOutlet UITableView *tableView1;
+@property (weak, nonatomic) IBOutlet UITableView *tableView2;
+@property (weak, nonatomic) IBOutlet UITableView *tableView3;
 
 @end

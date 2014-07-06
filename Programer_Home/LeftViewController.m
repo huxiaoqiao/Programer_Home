@@ -11,8 +11,9 @@
 #import "LeftMenuCell.h"
 #import "PPRevealSideViewController.h"
 #import "AppDelegate.h"
+#import "SearchView.h"
 
-@interface LeftViewController ()<UITableViewDataSource,UITableViewDelegate>
+@interface LeftViewController ()<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate>
 {
     NSMutableArray *dataArr;
 }
@@ -25,7 +26,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         dataArr = [NSMutableArray array];
-        NSArray *titleArr = @[@"资讯",@"问答",@"动弹",@"软件",@"设置"];
+        NSArray *titleArr = @[@"资讯",@"帖子",@"动弹",@"软件",@"设置"];
         NSArray *imageArr = @[@"menu_news",@"menu_help",@"menu_forum",@"menu_app",@"menu_setting"];
         for(int i = 0;i < titleArr.count;i ++)
         {
@@ -45,9 +46,12 @@
     //注册Cell
     UINib *customeCell = [UINib nibWithNibName:@"LeftMenuCell" bundle:nil];
     [self.tableView registerNib:customeCell forCellReuseIdentifier:@"LeftMenuCell"];
-    //设置代理
+    //设置TableView代理
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    
+    //设置SearchBar代理
+    self.searchBar.delegate = self;
 }
 
 #pragma mark - UITableViewDataSource,UITableViewDelegate
@@ -116,6 +120,16 @@
         default:
             break;
     }
+}
+
+#pragma mark - UISearchBarDelegate
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
+{
+    
+    SearchView *searchViewCtl = [[SearchView alloc] initWithNibName:@"SearchView" bundle:nil];
+    [self.revealSideViewController popViewControllerWithNewCenterController:searchViewCtl animated:YES];
+    
+    
 }
 - (void)didReceiveMemoryWarning
 {

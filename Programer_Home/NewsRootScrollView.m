@@ -6,22 +6,22 @@
 //  Copyright (c) 2013年 Chen Yaoqiang. All rights reserved.
 //
 
-#import "SVRootScrollView.h"
+#import "NewsRootScrollView.h"
 
 #import "SVGloble.h"
-#import "SVTopScrollView.h"
+#import "NewsTopScrollView.h"
 #import "NewsView.h"
 #import "BlogView.h"
 #import "RecommendView.h"
 
 #define POSITIONID (int)(scrollView.contentOffset.x/320)
 
-@implementation SVRootScrollView
+@implementation NewsRootScrollView
 
 @synthesize viewNameArray;
 
-+ (SVRootScrollView *)shareInstance {
-    static SVRootScrollView *_instance;
++ (NewsRootScrollView *)shareInstance {
+    static NewsRootScrollView *_instance;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         _instance=[[self alloc] initWithFrame:CGRectMake(0,30, 320, [SVGloble shareInstance].globleHeight)];
@@ -138,10 +138,10 @@
 //滚动后修改顶部滚动条
 - (void)adjustTopScrollViewButton:(UIScrollView *)scrollView
 {
-    [[SVTopScrollView shareInstance] setButtonUnSelect];
-    [SVTopScrollView shareInstance].scrollViewSelectedChannelID = POSITIONID+100;
-    [[SVTopScrollView shareInstance] setButtonSelect];
-    [[SVTopScrollView shareInstance] setScrollViewContentOffset];
+    [[NewsTopScrollView shareInstance] setButtonUnSelect];
+    [NewsTopScrollView shareInstance].scrollViewSelectedChannelID = POSITIONID+100;
+    [[NewsTopScrollView shareInstance] setButtonSelect];
+    [[NewsTopScrollView shareInstance] setScrollViewContentOffset];
 }
 
 

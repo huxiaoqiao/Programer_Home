@@ -11,5 +11,5 @@
 @interface NewsDetail : UIViewController
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
 @property int newsID;
-
+@property BOOL isFavoriteCtlPush;
 @end

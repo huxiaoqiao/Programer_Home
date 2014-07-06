@@ -140,7 +140,9 @@
         }
         NewsModel *model = _dataArr[indexPath.row];
         cell.titleLabel.text = model.title;
-        cell.titleLabel.font = [UIFont boldSystemFontOfSize:16];
+        //cell.titleLabel.font = [UIFont boldSystemFontOfSize:14];
+        //NSArray *fontArr = [UIFont familyNames];
+        //cell.titleLabel.font = font;
         cell.pubDateLabel.text = [NSString stringWithFormat:@"%@ 发布于 %@ (%d评)",model.author,model.pubDate,model.commentCount];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }

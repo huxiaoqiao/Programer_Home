@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SVRootScrollView.h"
-#import "SVTopScrollView.h"
+#import "NewsRootScrollView.h"
+#import "NewsTopScrollView.h"
 @interface RootViewController : UIViewController
-@property (nonatomic,strong) SVTopScrollView *topScrollView;
-@property (nonatomic,strong) SVRootScrollView *rootScrollView;
+@property (nonatomic,strong) NewsTopScrollView *topScrollView;
+@property (nonatomic,strong) NewsRootScrollView *rootScrollView;
 @end

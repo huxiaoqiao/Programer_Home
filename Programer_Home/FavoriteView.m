@@ -11,6 +11,9 @@
 #import "GDataXMLNode.h"
 #import "FavoriteModel.h"
 #import "PostDetail.h"
+#import "BlogDetail.h"
+#import "NewsDetail.h"
+#import "SoftWareDetail.h"
 
 @interface FavoriteView ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -124,7 +127,13 @@
     switch (model.type) {
         case 1:
         {
-            
+            NSArray *arr = [model.url componentsSeparatedByString:@"/"];
+            NSString *prefix = [arr lastObject];
+            SoftWareDetail *detailCtl = [[SoftWareDetail alloc] initWithNibName:@"SoftWareDetail" bundle:nil];
+            detailCtl.softwareName = prefix;
+            NSLog(@"%@",model.title);
+            detailCtl.isFavoriteCtlPush = YES;
+            [self.navigationController pushViewController:detailCtl animated:YES];
         }
             break;
             case 2:
@@ -136,8 +145,20 @@
         }
             break;
             case 3:
+        {
+            BlogDetail *detailCtl = [[BlogDetail alloc] initWithNibName:@"BlogDetail" bundle:nil];
+            detailCtl.blogID = model.objid;
+            detailCtl.isFavoriteCtlPush = YES;
+            [self.navigationController pushViewController:detailCtl animated:YES];
+        }
             break;
             case 4:
+        {
+            NewsDetail *detailCtl = [[NewsDetail alloc] initWithNibName:@"NewsDetail" bundle:nil];
+            detailCtl.newsID = model.objid;
+            detailCtl.isFavoriteCtlPush = YES;
+            [self.navigationController pushViewController:detailCtl animated:YES];
+        }
             break;
             case 5:
             break;

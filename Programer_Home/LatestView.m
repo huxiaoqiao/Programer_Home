@@ -37,6 +37,9 @@
     self.tableView.dataSource = self;
     [self setupRefresh];
     [self autoRefresh];
+    //注册TableViewCell
+    UINib *customCell  = [UINib nibWithNibName:@"TweetCell" bundle:nil];
+    [self.tableView registerNib:customCell forCellReuseIdentifier:@"TweetCell"];
 }
 - (void)setupRefresh
 {
@@ -104,6 +107,7 @@
 {
     return _dataArr.count;
 }
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     TweetModel *model = _dataArr[indexPath.row];
@@ -122,16 +126,15 @@
     TweetCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TweetCell"];
     if(_dataArr.count != 0)
     {
-        if(cell == nil)
-        {
-            NSArray *arr = [[NSBundle mainBundle] loadNibNamed:@"TweetCell" owner:self options:nil];
-            cell = arr[0];
-            [cell addImageView];
-        }
+        
+        [cell addImageView];
         cell.model = _dataArr[indexPath.row];
     }
     return cell;
 }
+
+
+
 //点击某行进入动弹详情页
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {

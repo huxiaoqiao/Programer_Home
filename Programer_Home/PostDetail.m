@@ -100,6 +100,7 @@
     if(_isFavoriteCtlPush)
     {
         [self.navigationController popViewControllerAnimated:YES];
+        _isFavoriteCtlPush = NO;
     }else{
        [self dismissViewControllerAnimated:YES completion:nil];
     }
